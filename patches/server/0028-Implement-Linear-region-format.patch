@@ -49,7 +49,7 @@ index f2c27e0ac65be4b75c1d86ef6fd45fdb538d96ac..84ef82da3a18341c1f8bc463360e8ba0
          public static final class InProgressWrite {
              public long writeCounter;
 diff --git a/src/main/java/gq/bxteam/divinemc/configuration/DivineConfig.java b/src/main/java/gq/bxteam/divinemc/configuration/DivineConfig.java
-index 11dc1af9f8d8ce8c0a855d14a35077f5482ef0e8..def6f834d32b97e1065b17657e73d020a873bd14 100644
+index 11dc1af9f8d8ce8c0a855d14a35077f5482ef0e8..72014802c047437cf628f473a109d3186d33a3d5 100644
 --- a/src/main/java/gq/bxteam/divinemc/configuration/DivineConfig.java
 +++ b/src/main/java/gq/bxteam/divinemc/configuration/DivineConfig.java
 @@ -157,4 +157,15 @@ public class DivineConfig {
@@ -60,8 +60,8 @@ index 11dc1af9f8d8ce8c0a855d14a35077f5482ef0e8..def6f834d32b97e1065b17657e73d020
 +    public static int linearFlushFrequency = 10;
 +    public static int linearFlushThreads = 1;
 +    private static void regionFormatSettings() {
-+        linearFlushFrequency = getInt("region-format.linear.flush-frequency", linearFlushFrequency);
-+        linearFlushThreads = getInt("region-format.linear.flush-max-threads", linearFlushThreads);
++        linearFlushFrequency = getInt("settings.region-format.linear.flush-frequency", linearFlushFrequency);
++        linearFlushThreads = getInt("settings.region-format.linear.flush-max-threads", linearFlushThreads);
 +        if (linearFlushThreads < 0)
 +            linearFlushThreads = Math.max(Runtime.getRuntime().availableProcessors() + linearFlushThreads, 1);
 +        else

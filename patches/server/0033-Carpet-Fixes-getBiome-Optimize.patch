@@ -5,21 +5,21 @@ Subject: [PATCH] Carpet-Fixes: getBiome Optimize
 
 
 diff --git a/src/main/java/gq/bxteam/divinemc/configuration/DivineConfig.java b/src/main/java/gq/bxteam/divinemc/configuration/DivineConfig.java
-index c58eb66184d3e7fcf722d8871eb212eebed92646..b028e393fa488dbff6a240f209d2ab059f677363 100644
+index 0c5a261bc83ad9b20b06b685914d880b67ff3ea2..9f50b2a3c8a576074d75719e6e2abbd984814d7f 100644
 --- a/src/main/java/gq/bxteam/divinemc/configuration/DivineConfig.java
 +++ b/src/main/java/gq/bxteam/divinemc/configuration/DivineConfig.java
-@@ -173,4 +173,9 @@ public class DivineConfig {
-     private static void chatMessageSignatures() {
-         chatMessageSignatures = getBoolean("settings.disable-chat-reports", chatMessageSignatures);
+@@ -175,7 +175,9 @@ public class DivineConfig {
      }
-+
-+    public static boolean recipeManagerOptimization = true;
-+    private static void optimizations() {
-+        recipeManagerOptimization = getBoolean("settings.optimizations.recipe-manager-optimization", recipeManagerOptimization);
-+    }
+ 
+     public static boolean recipeManagerOptimization = true;
++    public static boolean biomeManagerOptimization = true;
+     private static void optimizations() {
+         recipeManagerOptimization = getBoolean("settings.optimizations.recipe-manager-optimization", recipeManagerOptimization);
++        biomeManagerOptimization = getBoolean("settings.optimizations.biome-manager-optimization", biomeManagerOptimization);
+     }
  }
 diff --git a/src/main/java/net/minecraft/world/level/biome/BiomeManager.java b/src/main/java/net/minecraft/world/level/biome/BiomeManager.java
-index 5695c5116c8a338b2e41aafcb2dc9f2146856970..b08c4e1d84e8db09f7ca70df89c75ed7460e71b8 100644
+index 5695c5116c8a338b2e41aafcb2dc9f2146856970..26dc7ca097d2b16d7cfa96abd847a8f5744eb45d 100644
 --- a/src/main/java/net/minecraft/world/level/biome/BiomeManager.java
 +++ b/src/main/java/net/minecraft/world/level/biome/BiomeManager.java
 @@ -14,6 +14,7 @@ public class BiomeManager {
@@ -61,7 +61,7 @@ index 5695c5116c8a338b2e41aafcb2dc9f2146856970..b08c4e1d84e8db09f7ca70df89c75ed7
 -                o = p;
 -                g = v;
 +        // DivineMC start - Carpet-Fixes: getBiome Optimize
-+        if (gq.bxteam.divinemc.configuration.DivineConfig.recipeManagerOptimization) {
++        if (gq.bxteam.divinemc.configuration.DivineConfig.biomeManagerOptimization) {
 +            int xMinus2 = pos.getX() - 2;
 +            int yMinus2 = pos.getY() - 2;
 +            int zMinus2 = pos.getZ() - 2;
