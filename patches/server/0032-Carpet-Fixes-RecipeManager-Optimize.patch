@@ -1,0 +1,38 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: NONPLAYT <76615486+NONPLAYT@users.noreply.github.com>
+Date: Sat, 13 Jan 2024 18:58:14 +0300
+Subject: [PATCH] Carpet-Fixes: RecipeManager Optimize
+
+Original project: https://github.com/fxmorin/carpet-fixes
+Improves: [Blast]Furnace/Campfire/Smoker/Stonecutter/Crafting/Sheep Color Choosing
+
+diff --git a/src/main/java/net/minecraft/world/item/crafting/RecipeManager.java b/src/main/java/net/minecraft/world/item/crafting/RecipeManager.java
+index b81e1802c8dcc8ebdef96d70088c18379598a66b..ea46296d5652f2fdef40f8601def4d7e8c44e938 100644
+--- a/src/main/java/net/minecraft/world/item/crafting/RecipeManager.java
++++ b/src/main/java/net/minecraft/world/item/crafting/RecipeManager.java
+@@ -11,14 +11,9 @@ import com.google.gson.JsonParseException;
+ import com.mojang.datafixers.util.Pair;
+ import com.mojang.logging.LogUtils;
+ import com.mojang.serialization.JsonOps;
+-import java.util.Collection;
+-import java.util.Collections;
+-import java.util.Comparator;
+-import java.util.Iterator;
+-import java.util.List;
+-import java.util.Map;
++
++import java.util.*;
+ import java.util.Map.Entry;
+-import java.util.Optional;
+ import java.util.stream.Collectors;
+ import java.util.stream.Stream;
+ import javax.annotation.Nullable;
+@@ -137,7 +132,7 @@ public class RecipeManager extends SimpleJsonResourceReloadListener {
+     }
+ 
+     public <C extends Container, T extends Recipe<C>> List<RecipeHolder<T>> getAllRecipesFor(RecipeType<T> type) {
+-        return List.copyOf(this.byType(type).values());
++        return new ArrayList<>(this.byType(type).values()); // DivineMC - Carpet-Fixes: RecipeManager Optimize
+     }
+ 
+     public <C extends Container, T extends Recipe<C>> List<RecipeHolder<T>> getRecipesFor(RecipeType<T> type, C inventory, Level world) {
