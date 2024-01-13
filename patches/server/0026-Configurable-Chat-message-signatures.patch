@@ -5,7 +5,7 @@ Subject: [PATCH] Configurable Chat message signatures
 
 
 diff --git a/src/main/java/gq/bxteam/divinemc/configuration/DivineConfig.java b/src/main/java/gq/bxteam/divinemc/configuration/DivineConfig.java
-index def6f834d32b97e1065b17657e73d020a873bd14..c58eb66184d3e7fcf722d8871eb212eebed92646 100644
+index 72014802c047437cf628f473a109d3186d33a3d5..cc7f95d5460053d2475a62eb087682a2f28840a0 100644
 --- a/src/main/java/gq/bxteam/divinemc/configuration/DivineConfig.java
 +++ b/src/main/java/gq/bxteam/divinemc/configuration/DivineConfig.java
 @@ -168,4 +168,9 @@ public class DivineConfig {
