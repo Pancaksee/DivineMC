@@ -1,0 +1,41 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: NONPLAYT <76615486+NONPLAYT@users.noreply.github.com>
+Date: Sun, 14 Jan 2024 14:47:11 +0300
+Subject: [PATCH] vmp: skip entity move if movement is zero
+
+Original code by RelativityMC, licensed under MIT
+You can find the original code on https://github.com/RelativityMC/VMP-fabric (Yarn mappings)
+
+diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
+index 29e040ff5c2d5c4022dd18d807b1b665e2acbe9c..caa86165aae9ac7cfb7608b56aef0ca1a3630b35 100644
+--- a/src/main/java/net/minecraft/world/entity/Entity.java
++++ b/src/main/java/net/minecraft/world/entity/Entity.java
+@@ -315,6 +315,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, S
+     public float yRotO;
+     public float xRotO;
+     private AABB bb;
++    private boolean boundingBoxChanged = false; // DivineMC - vmp: skip entity move if movement is zero
+     public boolean onGround;
+     public boolean horizontalCollision;
+     public boolean verticalCollision;
+@@ -1109,6 +1110,12 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, S
+     // Paper end - detailed watchdog information
+ 
+     public void move(MoverType movementType, Vec3 movement) {
++        // DivineMC start - vmp: skip entity move if movement is zero
++        if (!boundingBoxChanged && movement.equals(Vec3.ZERO)) {
++            boundingBoxChanged = false;
++            return;
++        }
++        // DivineMC end
+         // Paper start - detailed watchdog information
+         io.papermc.paper.util.TickThread.ensureTickThread("Cannot move an entity off-main");
+         synchronized (this.posLock) {
+@@ -4154,6 +4161,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, S
+     }
+ 
+     public final void setBoundingBox(AABB boundingBox) {
++        if (!this.bb.equals(boundingBox)) boundingBoxChanged = true; // DivineMC - vmp: skip entity move if movement is zero
+         // CraftBukkit start - block invalid bounding boxes
+         double minX = boundingBox.minX,
+                 minY = boundingBox.minY,
